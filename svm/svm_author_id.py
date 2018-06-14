@@ -26,7 +26,8 @@ features_train, features_test, labels_train, labels_test = preprocess()
 features_train = features_train[:len(features_train)/100]
 labels_train = labels_train[:len(labels_train)/100]
 
-clf = SVC(kernel="linear")
+#clf = SVC(kernel="linear")
+clf = SVC(kernel="rbf")
 clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 print accuracy_score(pred, labels_test)
