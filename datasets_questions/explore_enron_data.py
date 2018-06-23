@@ -20,6 +20,7 @@ import pickle
 #pickle.load returns a dict
 enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r"))
 
+
 #How many data points (people) are in the dataset?
 print "No of data points: ", len(enron_data)
 
@@ -53,3 +54,28 @@ print "No. of email messages from Wesley Colwell to persons of interest: ", enro
 
 #What is the value of stock options exercised by Jeffrey K Skilling?
 print "Value of stock options exercised by Jeffrey K Skilling: ", enron_data["SKILLING JEFFREY K"]["exercised_stock_options"]
+
+
+#who took home the most money (largest value of "total_payments" feature)?
+print "Kenneth Lay total_payments: ", enron_data["LAY KENNETH L"]["total_payments"]
+print "Jeffrey Skilling total_payments: ", enron_data["SKILLING JEFFREY K"]["total_payments"]
+print "Andrew Fastow total_payments: ", enron_data["FASTOW ANDREW S"]["total_payments"]
+
+
+#How is it denoted when a feature doesn't have a well-defined value?
+# Ans: 'NaN'
+
+
+#How many folks in this dataset have a quantified salary?
+quantified_salary = 0
+email_addr = 0
+for folk in enron_data:
+    if enron_data[folk]["salary"] != 'NaN' and enron_data[folk]["salary"] > 0:
+        quantified_salary = quantified_salary + 1
+    if enron_data[folk]["email_address"] != 'NaN':
+        email_addr = email_addr + 1
+print "Folks with quantified salary: ", quantified_salary
+print "Folks with known email address: ", email_addr
+
+
+
