@@ -30,11 +30,11 @@ print "Available features for each person: ", len(enron_data.values()[0])
 
 
 #How many POI's are there in the E+F dataset?
-count = 0;
+poiCount = 0;
 for person in enron_data:
     if enron_data[person]["poi"]==1:
-        count = count +1
-print "No of POIs in E+F dataset: ", count
+        poiCount = poiCount +1
+print "No of POIs in E+F dataset: ", poiCount
 
 
 #How many POI's were there total?
@@ -70,7 +70,7 @@ print "Andrew Fastow total_payments: ", enron_data["FASTOW ANDREW S"]["total_pay
 quantified_salary = 0
 email_addr = 0
 for folk in enron_data:
-    if enron_data[folk]["salary"] != 'NaN' and enron_data[folk]["salary"] > 0:
+    if enron_data[folk]["salary"] != 'NaN' or enron_data[folk]["salary"] > 0:
         quantified_salary = quantified_salary + 1
     if enron_data[folk]["email_address"] != 'NaN':
         email_addr = email_addr + 1
@@ -78,4 +78,53 @@ print "Folks with quantified salary: ", quantified_salary
 print "Folks with known email address: ", email_addr
 
 
+#How many people in the E+F dataset (as it currently exists) have "NaN" for their total payments?
+#What percentage of people in the dataset as a whole is this?
+countOfNaNPayments = 0
+for person in enron_data:
+    if enron_data[person]["total_payments"] == 'NaN':
+        countOfNaNPayments = countOfNaNPayments + 1
+print "No of people have 'NaN' for their total payments: ", countOfNaNPayments
+print "Percentage of people have 'NaN' for their total payments: ", (float(countOfNaNPayments)/(len(enron_data))) * 100
 
+
+#How many POIs in the E+F dataset have "NaN" for their total payments?
+#What percentage of POI's as a whole is this?
+count = 0
+for person in enron_data:
+    if enron_data[person]["total_payments"] == 'NaN' and enron_data[person]["poi"] == True:
+        count = count + 1
+print "No of poi have 'NaN' for their total payments: ", count
+print "Percentage of poi have 'NaN' for their total payments: ", (float(count)/poiCount) * 100 #poiCount: Total no of POI 
+
+#If a machine learning algorithm were to use total_payments as a feature, 
+#would you expect it to associate a "NaN" value with POIs or non-POIs?
+#Ans: With non-POIs
+
+
+#What is the new number of people of the dataset?
+#Ans:   len(enron_data) + new 
+#       = 146 + 10
+#       += 156
+
+#What is the new number of folks with "NaN" for total payments?
+#Ans:   Old(countOfNaNPayments) + new 
+#       = 21 + 10
+#       = 31
+
+
+#What is the new number of POI's in the dataset? 
+#Ans:   poiCount + new 
+#       = 35 + 10 
+#       = 45
+
+
+#What is the new number of POI's with NaN for total_payments?
+#Ans:   count + new
+#       = 0 + 10
+#       = 10
+
+
+#Once the new data points are added, do you think a supervised classification 
+#algorithm might interpret "NaN" for total_payments as a clue that someone is a POI?
+#Ans: Yes
