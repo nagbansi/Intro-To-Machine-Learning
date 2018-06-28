@@ -12,7 +12,8 @@
     You fill in the regression code where indicated:
 """    
 
-
+import matplotlib
+matplotlib.use('agg')
 import sys
 import pickle
 sys.path.append("../tools/")
@@ -29,7 +30,7 @@ target, features = targetFeatureSplit( data )
 from sklearn.cross_validation import train_test_split
 feature_train, feature_test, target_train, target_test = train_test_split(features, target, test_size=0.5, random_state=42)
 train_color = "b"
-test_color = "b"
+test_color = "r"
 
 
 
@@ -38,11 +39,36 @@ test_color = "b"
 ### plots it correctly. Don't forget to change the test_color above from "b" to
 ### "r" to differentiate training points from test points.
 
+from sklearn.linear_model import LinearRegression
+#Create regression
+reg = LinearRegression()
+#fit regression
+reg.fit(feature_train, target_train)
+print "Score: ", reg.predict(feature_test)
+
+#What are the slope and intercept?
+print "Coef: ", reg.coef_
+print "Intercept: ", reg.intercept_
+
+#What's that score on the testing data?
+print"\n######## stats on test dataset #########"
+print "r-squared score: ", reg.score(feature_test, target_test)
+
+#What's that score on the training data?
+print"\n######## stats on training dataset #########"
+print "r-squared score: ", reg.score(feature_train, target_train)
+
+#What target are you trying to predict?
+# Ans: bonus
 
 
+#What is the input feature being used to predict it?
+# Ans: salary 
 
 
-
+#f you made the mistake of only assessing on the training data, 
+#would you overestimate or underestimate the performance of your regression?
+# Ans: overestimate, because we wont be knowing that there is over fitting happening.
 
 
 ### draw the scatterplot, with color-coded training and testing points
@@ -68,3 +94,4 @@ plt.xlabel(features_list[1])
 plt.ylabel(features_list[0])
 plt.legend()
 plt.show()
+plt.savefig("/home/nagbansi/Pictures/plot.png")
