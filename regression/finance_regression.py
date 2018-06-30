@@ -22,7 +22,8 @@ dictionary = pickle.load( open("../final_project/final_project_dataset_modified.
 
 ### list the features you want to look at--first item in the 
 ### list will be the "target" feature
-features_list = ["bonus", "salary"]
+#features_list = ["bonus", "salary"]
+features_list = ["bonus", "long_term_incentive"]
 data = featureFormat( dictionary, features_list, remove_any_zeroes=True)
 target, features = targetFeatureSplit( data )
 
@@ -44,7 +45,7 @@ from sklearn.linear_model import LinearRegression
 reg = LinearRegression()
 #fit regression
 reg.fit(feature_train, target_train)
-print "Score: ", reg.predict(feature_test)
+print "Prediction: ", reg.predict(feature_test)
 
 #What are the slope and intercept?
 print "Coef: ", reg.coef_
@@ -69,6 +70,11 @@ print "r-squared score: ", reg.score(feature_train, target_train)
 #f you made the mistake of only assessing on the training data, 
 #would you overestimate or underestimate the performance of your regression?
 # Ans: overestimate, because we wont be knowing that there is over fitting happening.
+
+
+#If you had to predict someone's bonus and you could only have one piece of information about them, 
+#would you rather know their salary or the long term incentive that they received?
+# Ans: long term incentive
 
 
 ### draw the scatterplot, with color-coded training and testing points
