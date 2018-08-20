@@ -1,12 +1,13 @@
 #!/usr/bin/python
 
+import matplotlib
+matplotlib.use('agg')
 import random
 import numpy
 import matplotlib.pyplot as plt
 import pickle
 
 from outlier_cleaner import outlierCleaner
-
 
 ### load up some practice data with outliers in it
 ages = pickle.load( open("practice_outliers_ages.pkl", "r") )
@@ -26,7 +27,16 @@ ages_train, ages_test, net_worths_train, net_worths_test = train_test_split(ages
 ### fill in a regression here!  Name the regression object reg so that
 ### the plotting code below works, and you can see what your regression looks like
 
+from sklearn.linear_model import LinearRegression
 
+reg = LinearRegression()
+reg.fit(ages_train, net_worths_train)
+
+#what slope does your regression have?
+print reg.coef_
+
+#What is the score you get when using your regression to make predictions with the test data?
+print reg.score(ages_test, net_worths_test)
 
 
 
@@ -42,6 +52,7 @@ except NameError:
     pass
 plt.scatter(ages, net_worths)
 plt.show()
+plt.savefig("/home/nagbansi/Pictures/outlier1.png")
 
 
 ### identify and remove the most outlier-y points
@@ -77,7 +88,7 @@ if len(cleaned_data) > 0:
     plt.xlabel("ages")
     plt.ylabel("net worths")
     plt.show()
-
+    plt.savefig("/home/nagbansi/Pictures/outlier1.png")
 
 else:
     print "outlierCleaner() is returning an empty list, no refitting to be done"
