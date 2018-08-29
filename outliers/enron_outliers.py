@@ -26,6 +26,19 @@ outlier_name = [j for j in data_dict if data_dict[j]['total_payments'] == max_to
 print "biggest outlier: ", outlier_name
 
 
+print data_dict.pop(''.join(outlier_name), 0)
+print data_dict.pop('TOTAL', 0)
+
+
+#Identifying Two More Outliers
+#One is already identified and deleted from data_dict
+
+outlier_name = [j for j in data_dict if str(data_dict[j]['bonus']).isdigit() and data_dict[j]['bonus'] > 5000000 and str(data_dict[j]['salary']).isdigit() and data_dict[j]['salary'] > 1000000]
+print "Name: ", outlier_name
+
+print data_dict.pop(''.join(outlier_name), 0)
+
+
 #Does this outlier seem like a data point that we should include when running machine learning on this dataset? 
 #Or should we remove it?
 
@@ -36,8 +49,6 @@ print "biggest outlier: ", outlier_name
 #this outlier anymore.
 
 
-print data_dict.pop(''.join(outlier_name), 0)
-print data_dict.pop('TOTAL', 0)
 data = featureFormat(data_dict, features) 
 
 for point in data:
@@ -49,7 +60,7 @@ matplotlib.pyplot.xlabel("salary")
 matplotlib.pyplot.ylabel("bonus")
 matplotlib.pyplot.show()
 #matplotlib.pyplot.savefig("/home/nagbansi/Pictures/Enron Outliers.png")
-matplotlib.pyplot.savefig("/home/nagbansi/Pictures/Enron Outliers removal.png")
+matplotlib.pyplot.savefig("/home/nagbansi/Pictures/Enron Outliers removal1.png")
 
 
 #Are all the outliers gone?
